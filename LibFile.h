@@ -28,7 +28,7 @@ class LibFile {
         uint32_t GetOffset(const char* name);
         uint32_t GetOffset(uint32_t num);
 
-        uint8_t* LumpPtrs[LIB_MAXLUMPS];
+        char* LumpPtrs[LIB_MAXLUMPS];
 
     public:
         LibFile();
@@ -43,7 +43,7 @@ class LibFile {
         uint8_t* GetPtr(const char* name);
         uint8_t* GetPtr(uint32_t num);
         uint8_t* Load(const char* name);
-        void WriteLump(uint32_t num, void* data, uint32_t size);
+        void WriteLump(uint32_t num, char* data, uint32_t size);
         void Save(const char* fname);
 };
 

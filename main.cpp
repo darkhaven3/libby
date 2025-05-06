@@ -49,25 +49,24 @@ int main(int argc, char* argv[]) {
             }
         }
 
-        //we want to replace a lump
+        //we want to replace a lump: [-option] [infile] [lumpname] [outfile]
         else if(!strcmp("-r", argv[1])) {
             if(argc < 4) ShowHelp();
 
             else {
                 lib.Open(argv[2]);
                 lumpnum = lib.GetNumForName(argv[3]);
-                newfile.open(argv[3], std::ios::ate | std::ios::binary);
                 len = std::filesystem::file_size(argv[3]);
-                newfile.seekg(std::ios::beg);
-
                 indata = (char*) malloc(len);
+                newfile.open(argv[3], std::ios::in | std::ios::binary);
+
                 newfile.read(indata, len);
                 newfile.close();
 
-                lib.WriteLump(lumpnum, (char*) indata, len);
+                lib.WriteLump(lumpnum, indata, len);
                 lib.Save(argv[4]);
                 lib.Close();
-                printf("wrote file %s (%d bytes)\n", argv[4], lib.GetSize(lumpnum));
+                printf("wrote file %s (%d bytes)\n", argv[4], std::filesystem::file_size(argv[4]));
 
             }
         }

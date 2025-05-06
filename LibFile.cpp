@@ -32,7 +32,7 @@ uint32_t LibFile::Open(const char* fname) {
         }
 
         for(int i=0; i < uNumEntries; i++) {
-            if(fsInfo[i].size > 0) LumpPtrs[i] = (uint8_t*) malloc(fsInfo[i].size);
+            if(fsInfo[i].size > 0) LumpPtrs[i] = (char*) malloc(fsInfo[i].size);
         }
 
         //now that the info table is prepared, read all the lumps at once
@@ -96,7 +96,7 @@ uint8_t* LibFile::GetPtr(uint32_t num) {
         exit(1);
     }
 
-    return LumpPtrs[num];
+    return (uint8_t*) LumpPtrs[num];
 }
 
 void LibFile::NewInfoTable(uint32_t num) {
@@ -134,18 +134,20 @@ void LibFile::Seek(int32_t offset, uint32_t flags) {
     }
 }
 
-void LibFile::WriteLump(uint32_t num, void* data, uint32_t size) {
+void LibFile::WriteLump(uint32_t num, char* data, uint32_t size) {
+    char* newptr;
     if(num > uNumEntries) {
         printf("%d is greater than numentries (%d)\n", num, uNumEntries);
         exit(1);
     }
     else {
         free(LumpPtrs[num]);
-        LumpPtrs[num] = (uint8_t*)malloc(size);
+        LumpPtrs[num] = (char*)malloc(size);
         fsInfo[num].size = size;
         fsInfo[num].ofs = 0;    //offset will be calculated on file save
+        newptr = LumpPtrs[num];
 
-        memcpy(LumpPtrs[num], data, size);
+        for(int i=0; i < size; i++) newptr[i] = data[i];
     }
 }
 

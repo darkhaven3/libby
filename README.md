@@ -1,3 +1,5 @@
+![image](https://github.com/user-attachments/assets/256cc592-ba43-44c7-88e1-d68acb9559b2)
+
 # libby
 Command-line utility for Shadowcaster (DOS). Extract or replace the contents of .lib files!
 

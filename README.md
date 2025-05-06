@@ -3,7 +3,9 @@ Command-line utility for Shadowcaster (DOS). Extract or replace the contents of 
 
 ## Usage
 `libby [-option] [infile] [lumpname] [outfile]`
+
 -x : extract a lump from infile, outfile is written
+
 -r : replace lump in infile with lumpname.ext, write outfile
 
 ## Building
